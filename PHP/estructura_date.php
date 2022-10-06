@@ -10,6 +10,7 @@ Mostrar la fecha y hora en el mismo formato que el reloj del ordenador
 10:38
 06/10/2022
 
+
 */
 echo date ("G:i");
 echo ("<br>");
@@ -50,6 +51,7 @@ switch($dia){
         $dia= ("Viernes");
         break;
 }
+
 
 $mes=date("F");
 switch($mes){
