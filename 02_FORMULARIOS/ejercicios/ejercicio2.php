@@ -6,7 +6,10 @@
     <input type="text" name="numero"><br><br>
     <input type="submit" value="Enviar">
 </form>
+<?php
 
+require 'footer.php';
+?>
 
 
     

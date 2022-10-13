@@ -8,3 +8,7 @@
     <input type="text" name="edad"><br><br>
     <input type="submit" value="Enviar">
 </form>
+<?php
+
+require 'footer.php';
+?>

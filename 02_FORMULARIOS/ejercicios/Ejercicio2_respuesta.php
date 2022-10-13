@@ -16,10 +16,10 @@
 
 //Numero=3
 
-$numero=$_GET["numero"];
+$n=$_POST["numero"];
 
 
-for ($i=1; $i <=$numero; $i++) { 
+for ($i=1; $i <=$n; $i++) { 
     echo "<li><p>$i</p></li>"; 
 }
 
