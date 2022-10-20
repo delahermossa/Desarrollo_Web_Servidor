@@ -26,6 +26,34 @@
         //SOLICITAR EL TITULO Y PRECIO OBLIGATORIOS
         $temp_titulo = depurar($_POST["titulo"]);
         $temp_precio = depurar($_POST["precio"]);
+        $temp_descripcion= depurar($_POST["descripcion"]);
+
+
+        if (isset($_POST["consola"])) {
+            $temp_consola = depurar($_POST["consola"]);
+        } else {
+            $temp_consola = "";
+        }
+        if (empty($temp_consola)) {
+            $err_consola = "La consola esta vacia";
+        } else {
+            $consola = $temp_consola;
+        }
+        $temp_descripcion = $_POST["descripcion"];
+        //validacion de la descripcion
+
+        if (empty($temp_descripcion)) {
+           
+        } else {
+            if(strlen($temp_descripcion)>250){
+                $err_descripcion = "La descripcion es obligatoria y no puede superar 250 caracteres";
+            }else{
+                $descripcion=$temp_descripcion;
+            }
+           
+       
+        }
+    }
 
         if (empty($temp_titulo)) {
             $err_titulo = "El título es obligatorio";
@@ -37,7 +65,7 @@
                 echo $temp_titulo;
                 $err_titulo = "El titulo no puede contener mas de 40 caracteres";
             } else {
-                //exito
+                //exito!
                 $titulo = $temp_titulo;
             }
         }
@@ -64,9 +92,12 @@
             }
         }
 
-        if (isset($titulo) && isset($precio)) {
+        if (isset($titulo) && isset($precio) && isset($consola)&& isset($descripcion)) {
             echo "<p>$titulo</p>";
             echo "<p>$precio</p>";
+            echo "<p>$consola</p>";
+            echo "<p>$descripcion</p>";
+
         }
 
         // PRIMERA FORMA
@@ -83,7 +114,7 @@
 
         //Striplashes evita que salgan las \ cuando ponemos caracteres especiales o acentos
         //var_dump(stripslashes($_POST["titulo"]));
-    }
+    
 
     function depurar($dato)
     {
@@ -96,40 +127,62 @@
     ?>
 
     <form action="" method="post">
-        
-         
-            <p>Título:<input type="text" name="titulo">
-
-                <span class="error">
-                    *<?php
-                        if (isset($err_titulo)) echo $err_titulo;
 
 
-                        ?>
-                </span>
+        <p>Título:<input type="text" name="titulo">
 
-            </p>
-            <p>Precio:<input type="text" name="precio">
+            <span class="error">
+                *<?php
+                    if (isset($err_titulo)) echo $err_titulo;
 
-                <span class="error">
 
-                    *<?php
+                    ?>
+            </span>
 
-                        if (isset($err_precio)) echo $err_precio;
-                        ?>
-                </span>
-            </p>
+        </p>
+        <p>Precio:<input type="text" name="precio">
 
-            <p>Consola:<select multiple name="Consolas">
-            <option value="PS4">PS4</option>
-            <option value="PS5">PS5</option>
-            <option value="XBOX">XBOX</option>
-            <option value="SWITCH">SWITCH</option>
+            <span class="error">
+
+                *<?php
+
+                    if (isset($err_precio)) echo $err_precio;
+                    ?>
+            </span>
+        </p>
+
+        <p>Consola:<select name="consola">
+                <option value="" selected disabled value="elige">Elige una consola</option>
+                <option value="ps4">PS4</option>
+                <option value="ps5">PS5</option>
+                <option value="xbox">XBOX</option>
+                <option value="switch">SWITCH</option>
             </select>
+            <span class="error">
+
+                *<?php
+
+                    if (isset($err_consola)) echo $err_consola;
+                    ?>
+            </span>
             <br>
 
-            </p> 
-            <p><input type="submit" value="Crear"></p>
+        </p>
+        <p>Descripcion:<textarea type="descripcion"></textarea>
+
+        <span class="error">
+
+            *<?php
+
+                if (isset($err_descripcion)) echo $err_descripcion;
+                ?>
+        </span>
+        </p>
+
+        
+
+
+        <p><input type="submit" value="Crear"></p>
     </form>
 
 </body>
