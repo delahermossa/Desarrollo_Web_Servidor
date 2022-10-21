@@ -4,7 +4,7 @@
     if(numerosValidos($dni)){
        
         if(letra($dni)){
-            echo "bien";
+            echo "Es correcto!";
             $resultado=true;
         }
     }
@@ -17,8 +17,7 @@ function numerosValidos($dni){
         if(is_numeric(substr($dni,$i,1))){
             
         }else{
-        
-
+            
             $result=false;
         }
         
@@ -30,3 +29,11 @@ function letra($dni){
     
     return true;
 }
+
+function letraDni ($dni) {
+    $posicion= intval($dni%23);
+    $letras= "TRWAGMYFPDXBNJZSQVHLCKEO";
+  //nos quedamos con el valor que encuentra en la posición indicada dentro de la cadena letras
+    $letraNif= substr ($letras, $posicion, 1);
+    return $letraNif;
+  }

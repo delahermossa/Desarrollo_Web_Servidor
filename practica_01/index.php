@@ -11,7 +11,7 @@
 
 <body>
     <h1>Practica_01</h1>
-    <p id="ej1">Ejercicio 1---- Números primos</p>
+    <h2 id="ej1">Ejercicio 1---- Números primos</h2>
     <form action="#ej1" method="post">
         <label>Número A</label>
         <input type="text" name="numeroA"><br></br>
@@ -47,7 +47,7 @@
     <br><br>
 
 
-    <p id="ej2">Ejercicio 2---- DNI Válido</p>
+    <h2 id="ej2">Ejercicio 2---- DNI Válido</h2>
     <form action="#ej2" method="post">
         <label>Inserte DNI</label>
         <input type="text" name="dni"><br></br>
@@ -59,23 +59,48 @@
         if ($_POST["f"] == "ej2") {
             require "funciones/dniValido.php";
             $dni = $_POST["dni"];
+            
             if (dniValido($dni)) {
                 echo "<p>El Dni $dni es valido</p>";
             } else {
                 echo "<p>El Dni no es valido</p>";
             }
         }
+
     }
     ?>
     <br><br>
 
-    <p id="ej3">Ejercicio 3----Tablas de multiplicar</p>
-    <form action="#ej2" method="post">
-        <label>Inserta un número</label>
-        <input type="text" name="tabla"><br></br>
-        <input type="hidden" name="f" value="ej3">
-        <input type="submit" value="Enviar">
-    </form>
+
+
+
+    <div>
+        <h2 id="ej3">Ejercicio 3----Tablas de multiplicar</h2>
+       
+
+        <br><br>
+        <?php
+        $multiplicando;
+        $multiplicador;
+        
+        echo "<table text-align:center; border=5>";
+        echo "<tr>";
+        for ($tabla=1; $tabla<=10  ; $tabla++) { 
+            echo "<td>Tabla del $tabla </td>";
+        }
+        echo "</tr>";
+        echo "<tr>";
+        for ($multiplicador=1; $multiplicador <=10 ; $multiplicador++) { 
+            for ($multiplicando=01; $multiplicando <=10 ; $multiplicando++) { 
+                echo "<td>$multiplicando X $multiplicador =";
+                echo ($multiplicando *$multiplicador);
+                echo "</td>";
+            }
+            echo "</tr>";
+        }
+        echo "</table>";
+        ?>
+    </div>
 
 
 </body>
