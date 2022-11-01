@@ -7,7 +7,7 @@ function esPrimo(int $numero){
     $result=true;
     for ($i = 2; $i < $numero; $i++) {
         if (($numero % $i) == 0) {
-            // No es primo 
+            //Devuelve false si no es primo
             $result=false;
             
         }
