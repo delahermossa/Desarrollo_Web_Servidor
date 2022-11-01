@@ -33,7 +33,7 @@
                 require "funciones/dniValido.php";
 
                 if (comprobarDni($temp_dni)) {
-                    echo "<p>El Dni $dni es valido</p>";
+                    echo "<p>El Dni $temp_dni es valido</p>";
                 } else {
                     echo "<p>El Dni no es valido</p>";
                 }
