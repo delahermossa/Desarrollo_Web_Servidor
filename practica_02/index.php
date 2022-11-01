@@ -17,17 +17,28 @@
         $temp_apellido1 = depurar($_POST["apellido1"]);
         $temp_apellido2 = depurar($_POST["apellido2"]);
         $temp_email = depurar($_POST["email"]);
-        $temp_nacimiento = depurar($_POST["nacimiento"]);
+        $temp_edad = depurar($_POST["edad"]);
 
         if (empty($temp_dni)) {
             $err_dni = "el dni no puede estar vacío";
         } else {
             //patron 8 numeros y una letra
+            //********* falta validar que la letra sea correcta */
             $pattern = "/^[0-9]{8}[a-zA-Z]{1}+$/";
 
             if (!preg_match($pattern, $temp_dni)) {
                 $err_dni = "el dni no tiene 8 digitos y una letra";
             } else {
+
+                require "funciones/dniValido.php";
+
+                if (comprobarDni($temp_dni)) {
+                    echo "<p>El Dni $dni es valido</p>";
+                } else {
+                    echo "<p>El Dni no es valido</p>";
+                }
+
+
                 $dni = $temp_dni;
                 echo "<p>$dni</p>";
             }
@@ -36,7 +47,7 @@
         if (empty($temp_nombre)) {
             $err_nombre = "El nombre es obligatorio";
         } else {
-            
+            //patron para el nombre, lo que puede contener
             $pattern = "/^[a-zA-Z áéíóúÁÉÍÓÚÑñ]+$/";
 
             if (!preg_match($pattern, $temp_nombre)) {
@@ -52,30 +63,31 @@
             }
         }
         if (empty($temp_apellido1)) {
-            $err_apellidos = "Primer apellido obligatorio";
+            $err_apellido1 = "Primer apellido obligatorio";
         } else {
-           
+
+            //patron para los apellidos, los caracteres que puede contener
             $pattern = "/^[a-zA-Z áéíóúÁÉÍÓÚÑñ]+$/";
 
             if (!preg_match($pattern, $temp_apellido1)) {
                 $err_apellidos = "El apellido solo puede contener letras";
             } else {
-                $apellidos =  ucwords(strtolower($temp_apellido1));
-                echo "<p>$apellidos</p>" ;
+                $apellido1 =  ucwords(strtolower($temp_apellido1));
+                echo "<p>$apellido1</p>";
             }
         }
 
         if (empty($temp_apellido2)) {
-            $err_apellidos = "Tu segundo apellido es obligatorio";
+            $err_apellido2 = "Tu segundo apellido es obligatorio";
         } else {
-           
+
             $pattern = "/^[a-zA-Z áéíóúÁÉÍÓÚÑñ]+$/";
 
             if (!preg_match($pattern, $temp_apellido2)) {
-                $err_apellidos = "Los apellidos solo pueden contener letras";
+                $err_apellido2 = "Los apellidos solo pueden contener letras";
             } else {
-                $apellidos =  ucwords(strtolower($temp_apellido2));
-                echo "<p>$apellidos</p>" ;
+                $apellido2 =  ucwords(strtolower($temp_apellido2));
+                echo "<p>$apellido2</p>";
             }
         }
 
@@ -100,25 +112,28 @@
         }
 
 
-
         /**
-         * Validar nacimiento
+         * Validamos edad
          */
 
-        if (empty($temp_nacimiento)) {
-            $err_nacimiento = "Tu fecha de nacimiento es obligatoria";
+        if (empty($temp_edad)) {
+            $err_edad = "Tu edad es obligatoria";
         } else {
-            $pattern = "/^[0-3][0-9]\/[0-1][0-9]\/(19|20)[0-9]{2}$/";
-            if (!preg_match($pattern, $temp_nacimiento)) {
-                $err_nacimiento = "Tu fecha de nacimiento debe tener el formato 02/02/2222";
+            if ($temp_edad < 0) {
+                $err_edad = "Tu edad no puede ser menor que 0";
             } else {
-                $nacimiento = $temp_nacimiento;
-                echo "<p>$nacimiento</p>";
+                if ($temp_edad >= 18) {
+                    echo "<p>Eres mayor de edad</p>";
+                } else {
+                    echo "<p>Eres menor de edad</p>";
+                    $edad = $temp_edad;
+                    echo "<p>$edad</p>";
+                }
             }
         }
     }
 
-    
+
 
 
     function depurar($dato)
@@ -129,36 +144,7 @@
         return $dato;
     }
 
-    function busca_edad($fecha_nacimiento){
-        $dia=date("d");
-        $mes=date("m");
-        $ano=date("Y");
-        
-        
-        $dianaz=date("d",strtotime($fecha_nacimiento));
-        $mesnaz=date("m",strtotime($fecha_nacimiento));
-        $anonaz=date("Y",strtotime($fecha_nacimiento));
-        
-        
-        //si el mes es el mismo pero el día inferior aun no ha cumplido años, le quitaremos un año al actual
-        
-        if (($mesnaz == $mes) && ($dianaz > $dia)) {
-        $ano=($ano-1); }
-        
-        //si el mes es superior al actual tampoco habrá cumplido años, por eso le quitamos un año al actual
-        
-        if ($mesnaz > $mes) {
-        $ano=($ano-1);}
-        
-         //ya no habría mas condiciones, ahora simplemente restamos los años y mostramos el resultado como su edad
-        
-        $edad=($ano-$anonaz);
-        
-        
-        return $edad;
-        
-        
-        }
+
     ?>
 
 
@@ -216,15 +202,15 @@
                     ?>
             </span>
 
-        </p> Fecha nacimiento: <input type="text" name="nacimiento">
-        <span class="error">
-            *<?php
-                if (isset($err_nacimiento)) echo $err_nacimiento;
+        <p> Edad: <input type="text" name="edad">
+            <span class="error">
+                *<?php
+                    if (isset($err_edad)) echo $err_edad;
 
 
-                ?>
-        </span>
-        <p>
+                    ?>
+            </span>
+        </p>
 
         </p>
         <p><input type="submit" value="Enviar"></p>
