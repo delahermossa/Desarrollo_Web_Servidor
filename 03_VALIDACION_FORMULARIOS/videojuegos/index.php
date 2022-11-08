@@ -40,6 +40,85 @@
             $consola = $temp_consola;
         }
         $temp_descripcion = $_POST["descripcion"];
+
+        //para la imagen
+        $file_name=$_FILES["imagen"]["name"];
+        $file_temp_name =$_FILES["imagen"]["tmp_name"];
+        $file_size =$_FILES["imagen"]["size"];
+        $file_type=$_FILES["imagen"]["type"];
+
+        //echo "<p>$file_name</p>";
+        //echo "<p>$file_temp_name</p>";
+        echo "<p>$file_size</p>";
+        //echo "<p>$file_type</p>";
+
+        /**
+         * VALIDAR EL FICHERO INTRODUCIDO
+         * -ES OBLIGATORIO INTRODUCIR UN FICHERO
+         * -TIENE QUE SER UNA IMAGEN DE EXTENSION JPG,JPEG,PNG´-LA IMAGEN NO PUEDE
+         * TENER MAS DE UN MG
+         */
+
+        //Aquí sacamos la extension del fichero
+        /*$extension = pathinfo($file_name,PATHINFO_EXTENSION);
+        echo "<p>La extension es $extension</p>";
+
+        //Renombramos el archivo para guardarlo de forma ordenada en nuestra carpeta, diferente al nombre que le ha puesto el usuario
+
+        $new_file_name="videojuego_". $temp_titulo. ".".$extension;
+
+        //guardamos la imagen en la carpeta images con su nombre cyberpunk.jpg
+        $path ="./images/".$new_file_name;*/
+
+        //Validacion del fichero
+
+        if(empty($file_name)){
+            $err_imagen="la imagen no puede estar vacia";
+
+        }else{
+            $file_size=$_FILES["imagen"]["size"];
+
+            if($file_size>1000000){
+                $err_imagen="la imagen no puede pesar mas de 1 megabyte";
+            }else{
+                $extension = pathinfo($file_name,PATHINFO_EXTENSION);
+
+                $extension_valida=match($extension){
+                    "jpg"=>true,
+                    "jpeg"=>true,
+                    "png"=>true,
+                    default=>false
+
+                };
+                if(!$extension_valida){
+                    $err_imagen="La imagen solo puede ser .png,.jpeg, o .jpg";
+
+                }else{
+                    $new_file_name="videojuego_". $temp_titulo. ".".$extension;    
+
+                    $path ="./images/".$new_file_name;
+
+                    $file_temp_name=$_FILES["imagen"]["tmp_name"];
+
+                    if(move_uploaded_file($file_temp_name,$path)){
+                        echo "<p>Fichero movido con exito</p>";
+
+                    }else{
+                        echo "<p>Fracaso</p>";
+                    }
+                }
+            }
+        }
+
+
+        
+
+        /*if(move_uploaded_file($file_temp_name,$path)){
+            echo"<p>Archivo movido con éxito</p>";
+        }else{
+            echo"<p>No se ha podido mover el ficher de la imagen</p>";
+        }
+*/
         //validacion de la descripcion
 
         if (empty($temp_descripcion)) {
@@ -50,10 +129,8 @@
             }else{
                 $descripcion=$temp_descripcion;
             }
-           
-       
         }
-    }
+    
 
         if (empty($temp_titulo)) {
             $err_titulo = "El título es obligatorio";
@@ -91,7 +168,7 @@
                 }
             }
         }
-
+    }
         if (isset($titulo) && isset($precio) && isset($consola)&& isset($descripcion)) {
             echo "<p>$titulo</p>";
             echo "<p>$precio</p>";
@@ -126,7 +203,7 @@
 
     ?>
 
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
 
 
         <p>Título:<input type="text" name="titulo">
@@ -168,13 +245,24 @@
             <br>
 
         </p>
-        <p>Descripcion:<textarea type="descripcion"></textarea>
+        <p>Descripcion:<textarea name="descripcion"></textarea>
 
         <span class="error">
 
             *<?php
 
                 if (isset($err_descripcion)) echo $err_descripcion;
+                ?>
+        </span>
+        </p>
+
+        <p>Imagen:<input type="file" name="imagen">
+
+        <span class="error">
+
+            *<?php
+
+                if (isset($err_imagen)) echo $err_imagen;
                 ?>
         </span>
         </p>
