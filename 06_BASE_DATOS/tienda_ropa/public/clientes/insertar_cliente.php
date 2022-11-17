@@ -11,7 +11,9 @@
 
 <body>
     <?php
+    require "../../util/control_acceso.php";
     require "../../util/database.php";
+    require "../header.php";
 
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -38,7 +40,7 @@
             $apellido2 = !empty($apellido2) ? "'$apellido2'" : "NULL";
 
             $sql = "INSERT INTO clientes (usuario, contrasena, nombre, apellido1, apellido2, fechaNacimiento,rol) 
-            VALUES ('$usuario','$hash_contrasena','$nombre','$apellido1',$apellido2,'$fechaNacimiento',$rol)";
+            VALUES ('$usuario','$hash_contrasena','$nombre','$apellido1',$apellido2,'$fechaNacimiento','$rol')";
 
 
 
@@ -62,7 +64,7 @@
     ?>
 
     <div class="container">
-        <?php require "../header.php" ?>
+       
         <h1>Nuevo cliente</h1>
         <div class="row">
             <div class="col-6">

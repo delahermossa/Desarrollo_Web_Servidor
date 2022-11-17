@@ -12,8 +12,11 @@
 
 <body>
     <?php
-    require '../util/database.php'
+    require '../util/database.php';
+   
     ?>
+    
+   
 
 
     <?php
