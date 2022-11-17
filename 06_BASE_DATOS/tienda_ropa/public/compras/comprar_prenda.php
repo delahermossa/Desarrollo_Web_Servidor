@@ -13,12 +13,13 @@
 <body>
     <?php require '../header.php' ?>
     <?php require '../../util/database.php' ?>
+    <?php require '../../util/control_acceso.php'?>
 
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $prenda_id = $_POST["prenda"];
         $cantidad = $_POST["cantidad"];
-        $cliente_id = 10;
+        $cliente_id = $_SESSION["cliente_id"];
         $fecha = date('Y-m-d H:i:s');   //  2022-11-15 09:25
 
         $sql = "INSERT INTO clientes_prendas 

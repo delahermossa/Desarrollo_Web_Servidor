@@ -27,6 +27,8 @@
         if ($resultado->num_rows > 0) {
             while ($row = $resultado->fetch_assoc()) {
                 $hash_contrasena = $row["contrasena"];
+                $id=$row["id"];
+                $rol=$row["rol"];
             }
             $acceso_valido =
                 password_verify($contrasena, $hash_contrasena);
@@ -36,6 +38,9 @@
 
                     session_start();
                     $_SESSION["usuario"]=$usuario;
+                    $_SESSION["rol"]=$rol;
+                    $_SESSION["cliente_id"]=$id;
+
 
                     header('location:index.php');
                 }else{

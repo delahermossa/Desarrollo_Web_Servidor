@@ -13,6 +13,7 @@
     <?php
     require "../../util/database.php";
 
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $usuario = $_POST["usuario"];
         $contrasena = $_POST["contrasena"];
@@ -21,21 +22,23 @@
         $apellido1 = $_POST["apellido1"];
         $apellido2 = $_POST["apellido2"];
         $fechaNacimiento = $_POST["fechaNacimiento"];
+        $rol = $_POST["rol"];
 
 
         /**Aqui se completa categoria por lo que se inserta en la tabla el cliente con el segundo apellido */
         if (
             !empty($usuario) && !empty($nombre) && !empty($contrasena) &&
             !empty($apellido1) &&
-            !empty($fechaNacimiento)
+            !empty($fechaNacimiento) &&
+            !empty($rol)
         ) {
 
 
 
             $apellido2 = !empty($apellido2) ? "'$apellido2'" : "NULL";
 
-            $sql = "INSERT INTO clientes (usuario, contrasena, nombre, apellido1, apellido2, fechaNacimiento) 
-            VALUES ('$usuario','$hash_contrasena','$nombre','$apellido1',$apellido2,'$fechaNacimiento')";
+            $sql = "INSERT INTO clientes (usuario, contrasena, nombre, apellido1, apellido2, fechaNacimiento,rol) 
+            VALUES ('$usuario','$hash_contrasena','$nombre','$apellido1',$apellido2,'$fechaNacimiento',$rol)";
 
 
 
@@ -98,6 +101,17 @@
                         <input class="form-control" type="date" name="fechaNacimiento" id="fechaNacimiento">
 
                     </div>
+
+                    <div class="form-group mb-3">
+                        <select class="form-select" name="rol">Rol
+                            <option selected disabled hidden>Selecciona el rol</option>
+                            <option value="administrador">Administrador</option>
+                            <option value="usuario">Usuario</option>
+
+                        </select>
+
+                    </div>
+
 
 
 
