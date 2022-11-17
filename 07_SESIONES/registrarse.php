@@ -70,8 +70,8 @@
                         <input class="form-control" name="nombre" type="text">
                     </div>
                     <div class="form-group mb-3">
-                        <select class="form-select" name="talla">Rol
-                            <option selected>Selecciona el rol</option>
+                        <select class="form-select" name="rol">Rol
+                            <option selected disabled hidden>Selecciona el rol</option>
                             <option value="administrador">Administrador</option>
                             <option value="usuario">Usuario</option>
                             
