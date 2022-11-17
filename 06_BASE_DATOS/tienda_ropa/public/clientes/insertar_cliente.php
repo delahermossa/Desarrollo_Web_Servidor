@@ -15,77 +15,94 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $usuario = $_POST["usuario"];
+        $contrasena = $_POST["contrasena"];
+        $hash_contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
         $nombre = $_POST["nombre"];
-        $apellido1 = $_POST["apellido_1"];
-        $apellido2 = $_POST["apellido_2"];
-        $fecha_nacimiento = $_POST["fecha_nacimiento"];
+        $apellido1 = $_POST["apellido1"];
+        $apellido2 = $_POST["apellido2"];
+        $fechaNacimiento = $_POST["fechaNacimiento"];
 
-        /**La categoria no es obligatoria en la tabla por lo que se podria poner o no */
-
-        if (isset($_POST["categoria"])) {
-            $categoria = $_POST["categoria"];
-        } else {
-            $categoria = "";
-        }
 
         /**Aqui se completa categoria por lo que se inserta en la tabla el cliente con el segundo apellido */
-        if (!empty($usuario) && !empty($nombre) && !empty($apellido1)&& !empty($fecha_nacimiento)) {
-            if (!empty($apellido2)) {
-                $sql = "INSERT INTO clientes (usuario, nombre, apellido_1, apellido_2, fecha_nacimiento) VALUES ('$usuario','$nombre','$apellido1','$apellido2','$fecha_nacimiento')";
-            } else {
-                /**Aqui se inserta el cliente sin el segundo apellido ya que no es obligatorio en la bd */
-                $sql = "INSERT INTO clientes (usuario, nombre, apellido_1, fecha_nacimiento) VALUES ('$usuario','$nombre','$apellido1','$fecha_nacimiento')";
-            }
+        if (
+            !empty($usuario) && !empty($nombre) && !empty($contrasena) &&
+            !empty($apellido1) &&
+            !empty($fechaNacimiento)
+        ) {
+
+
+
+            $apellido2 = !empty($apellido2) ? "'$apellido2'" : "NULL";
+
+            $sql = "INSERT INTO clientes (usuario, contrasena, nombre, apellido1, apellido2, fechaNacimiento) 
+            VALUES ('$usuario','$hash_contrasena','$nombre','$apellido1',$apellido2,'$fechaNacimiento')";
+
+
 
             if ($con->query($sql) == "TRUE") {
-                echo "<p>Cliente insertado</p>";
+    ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Éxito!</strong> Cliente insertado correctamente.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php
             } else {
-                echo "<p>El cliente no se ha insertado</p>";
+            ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>¡Error!</strong> No se ha podido insertar la prenda.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+    <?php
             }
         }
     }
     ?>
 
     <div class="container">
-        <h1>Nueva prenda</h1>
+        <?php require "../header.php" ?>
+        <h1>Nuevo cliente</h1>
         <div class="row">
             <div class="col-6">
 
                 <!--Formulario-->
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
 
                     <div class="form-group mb-3">
                         <label class="form-label">Usuario</label>
-                        <input class="form-control" type="text" name="usuario">
+                        <input class="form-control" type="text" name="usuario" id="usuario">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Contraseña</label>
+                        <input class="form-control" type="password" name="contrasena" id="contrasena">
                     </div>
 
                     <div class="form-group mb-3">
                         <label class="form-label">Nombre</label>
-                        <input class="form-control" type="text" name="nombre">
+                        <input class="form-control" type="text" name="nombre" id="nombre">
                     </div>
 
                     <div class="form-group mb-3">
                         <label class="form-label">Primer apellido</label>
-                        <input class="form-control" type="text" name="apellido_1">
+                        <input class="form-control" type="text" name="apellido1" id="apellido1">
                     </div>
 
                     <div class="form-group mb-3">
                         <label class="form-label">Segundo apellido</label>
-                        <input class="form-control" type="text" name="apellido_2">
+                        <input class="form-control" type="text" name="apellido2" id="apellido2">
                     </div>
 
 
                     <div class="form-group mb-3">
                         <label class="form-label">Fecha de nacimiento</label>
-                        <input class="form-control" type="date" name="fecha_nacimiento">
+                        <input class="form-control" type="date" name="fechaNacimiento" id="fechaNacimiento">
 
                     </div>
 
 
 
 
-
-                    <button class="btn btn-primary mt-3" type="submit">Crear</button>
+                    <button class="btn btn-primary mt-3" type="submit" name="btnCrear">Crear</button>
                     <a class="btn btn-secondary mt-3" href="index.php">Volver</a>
 
                 </form>

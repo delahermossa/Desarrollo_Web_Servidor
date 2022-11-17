@@ -11,10 +11,19 @@
 </head>
 
 <body>
+
+    <?php
+
+    require "../util/control_acceso.php";
+
+    ?>
     <?php
 
     require "../public/header.php";
+
     ?>
+
+
     <div class="container">
         <h1>¡Bienvenidos a nuestra tienda!</h1>
 

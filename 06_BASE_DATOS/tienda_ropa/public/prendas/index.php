@@ -22,7 +22,7 @@
     <div class="container">
         <h1>Listado de prendas</h1>
         <a class="btn btn-primary mb-3" href="insertar_prenda.php">Nueva prenda</a>
-        
+
         <div class="row">
             <div class="col-9">
                 <table class="table table-striped table-hover">
@@ -32,13 +32,50 @@
                             <th>Talla</th>
                             <th>Categoría</th>
                             <th>Precio</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                           
 
 
                         </tr>
 
                     </thead>
                     <tbody>
+
+
+                        <?php   //  Borrar prenda
+                        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                            $id = $_POST["id"];
+
+                            //  Consulta para coger la ruta de la imagen y luego borrarla
+                            $sql = "SELECT imagen FROM prendas WHERE id = '$id'";
+                            $resultado = $con->query($sql);
+
+                            if ($resultado->num_rows > 0) {
+                                while ($row = $resultado->fetch_assoc()) {
+                                    $imagen = $row["imagen"];
+                                }
+                                unlink("../.." . $imagen);
+                            }
+
+                            //  Consulta para borrar la prenda
+                            $sql = "DELETE FROM prendas WHERE id = '$id'";
+
+                            if ($con->query($sql)) {
+                        ?>
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    Se ha borrado la prenda
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+
                         <?php
+                            } else {
+                                echo "<p>Error al borrar</p>";
+                            }
+                        }
+                        ?>
+                        <?php //Seleccionar todas las prendas
 
                         $sql = "SELECT*FROM prendas";
                         $resultado = $con->query($sql);
@@ -49,14 +86,36 @@
                                 $talla = $row["talla"];
                                 $categoria = $row["categoria"];
                                 $precio = $row["precio"];
-
+                                $imagen = $row["imagen"];
 
                         ?>
                                 <tr>
+
                                     <td><?php echo $nombre ?></td>
                                     <td><?php echo $talla ?></td>
                                     <td><?php echo $categoria ?></td>
                                     <td><?php echo $precio ?></td>
+                                    <td><img width="50" height="60" src="../..<?php echo $imagen ?>"></td>
+
+
+
+
+
+                                    <td>
+                                        <form action="mostrar_prenda.php" method="get">
+                                            <button class="btn btn-secondary" type="submit">Ver</button>
+                                            <input type="hidden" name="id" value="<?php echo $row["id"] ?>">
+                                        </form>
+                                    </td>
+
+                                    <td>
+                                        <form action="" method="post">
+                                            <button class="btn btn-danger" type="submit">Borrar</button>
+                                            <input type="hidden" name="id" value="<?php echo $row["id"] ?>">
+
+                                        </form>
+
+                                    </td>
 
 
                                 </tr>
@@ -69,7 +128,7 @@
                 </table>
             </div>
             <div class="col-3">
-                <img width="200" height="200" src="../../resources/ropa.jpg" alt="">
+                <img width="300" height="300" src="../../resources/ropa.jpg" alt="">
 
             </div>
         </div>

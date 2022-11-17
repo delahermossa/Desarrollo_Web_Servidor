@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insertar_prenda</title>
+    <title>Nueva prenda</title>
 </head>
 
 <body>
@@ -14,38 +14,60 @@
     <?php
 
     /*EJERCICIO
-- Elegir la talla con un select (XS, S, M, L, XL) (añadir check en la BD)
-- Categoría con select (Camisetas, Pantalones, Accesorios) (añadir check en la BD)*/
+    - Elegir la talla con un select (XS, S, M, L, XL) (añadir check en la BD)
+    - Categoría con select (Camisetas, Pantalones, Accesorios) (añadir check en la BD)*/
     require "../../util/database.php";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nombre = $_POST["nombre"];
         $talla = $_POST["talla"];
         $precio = $_POST["precio"];
-        /**La categoria no es obligatoria en la tabla por lo que se podria poner o no */
-
-        if(isset($_POST["categoria"])){
-            $categoria=$_POST["categoria"];
-        }else{
-            $categoria="";
+        if (isset($_POST["categoria"])) {
+            $categoria = $_POST["categoria"];
+        } else {
+            $categoria = "";
         }
-      
+
+        $file_name = $_FILES["imagen"]["name"];
+        $file_temp_name = $_FILES["imagen"]["tmp_name"];
+        $path = "../../resources/images/prendas/" . $file_name;
+
+
+
         /**Aqui se completa categoria por lo que se inserta en la tabla la prenda con la categoria */
+        $imagen = "/resources/images/prendas/" . $file_name;
         if (!empty($nombre) && !empty($talla) && !empty($precio)) {
-            if(!empty($categoria)){
-                $sql = "INSERT INTO prendas (nombre, talla, precio, categoria) VALUES ('$nombre','$talla','$precio','$categoria')";
 
-            }else{
-                /**Aqui se inserta la prenda sin ka categoria ya que no es obligatoria en la tabla */
-                $sql = "INSERT INTO prendas (nombre, talla, precio ) VALUES ('$nombre','$talla','$precio')";
-
+            //Subimos la imagen a la carpeta deseada
+            if (move_uploaded_file($file_temp_name, $path)) {
+                echo "<p>Fichero movido con exito</p>";
+            } else {
+                echo "<p>NO se ha podido mover el fichero</p>";
             }
-           
+
+            //Insertamos la prenda en la base de datos
+            $imagen = "/resources/images/prendas/" . $file_name;
+            if (!empty($categoria)) {
+                $sql = "INSERT INTO prendas (nombre, talla, precio, categoria, imagen) 
+                VALUES ('$nombre','$talla','$precio','$categoria','$imagen')";
+            } else {
+                //Aqui se inserta la prenda sin la categoria ya que no es obligatoria en la tabla
+                $sql = "INSERT INTO prendas (nombre, talla, precio,imagen ) 
+                VALUES ('$nombre','$talla','$precio','$imagen')";
+            }
+
 
             if ($con->query($sql) == "TRUE") {
-                echo "<p>Prenda insertada</p>";
+
+    ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Éxito!</strong> Prenda insertada correctamente
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+    <?php
             } else {
-                echo "<p>La prenda no se ha insertado</p>";
+                echo "<p>Error al insertar la prenda</p>";
             }
         }
     }
@@ -53,12 +75,13 @@
 
 
     <div class="container">
+        <?php require '../header.php' ?>
         <h1>Nueva prenda</h1>
         <div class="row">
             <div class="col-6">
 
                 <!--Formulario-->
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
 
                     <div class="form-group mb-3">
                         <label class="form-label">Nombre</label>
@@ -82,7 +105,7 @@
                         <select class="form-select" name="categoria">Categoría
                             <option value="" selected disabled hidden>Selecciona una categoría</option>
                             <option value="camisetas">Camisetas</option>
-                            <option value="pantalones">Patatalones</option>
+                            <option value="pantalones">Pantalones</option>
                             <option value="accesorios">Accesorios</option>
 
                         </select>
@@ -96,8 +119,10 @@
 
                     </div>
 
-
-
+                    <div class="form-group mb-3">
+                        <label class="form-label">Imagen</label>
+                        <input class="form-control" type="file" name="imagen">
+                    </div>
 
 
                     <button class="btn btn-primary mt-3" type="submit">Crear</button>
@@ -110,10 +135,6 @@
         </div>
 
     </div>
-
-
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
