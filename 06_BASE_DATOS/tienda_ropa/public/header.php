@@ -25,7 +25,6 @@
         <a class="nav-link active" aria-current="page" href="http://localhost/06_base_datos/tienda_ropa/public/index.php">Inicio</a>
         <a class="nav-link" href="http://localhost/06_base_datos/tienda_ropa/public/compras/mis_compras.php">Mis compras</a>
         <a class="nav-link" href="http://localhost/06_base_datos/tienda_ropa/public/compras/comprar_prenda.php">Nueva compra</a>
-        <a class="nav-link" href="http://localhost/06_base_datos/tienda_ropa/public/iniciar_sesion.php">Inicio Sesion</a>
         <a class="nav-link" href="http://localhost/06_base_datos/tienda_ropa/public/desconectarse.php">Desconectarse</a>
         <a class="nav-link" href="">Bienvenido <?php echo $_SESSION["usuario"] ?></a>
 

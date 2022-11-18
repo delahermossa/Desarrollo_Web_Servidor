@@ -21,12 +21,16 @@
 
         <?php
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            $usuario = $_GET["usuario"];
+            //$usuario = $_GET["usuario"];
+           
+            $usuario= $_SESSION["usuario"];
+         
         }
         ?>
 
         <br>
-        <h1>Compras de <?php echo $usuario ?></h1>
+        <<h1>Compras de <?php echo $usuario ?></h1> 
+        
         <br>
         <div class="row">
             <div class="col-9">
