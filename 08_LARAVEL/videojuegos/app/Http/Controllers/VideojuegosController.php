@@ -16,6 +16,7 @@ class VideojuegosController extends Controller
         $mensaje='Esto es la lista de videojuegos';
         //Crear un array bidimensional de videojuegos
         //titulo, precio, pegi, descripcion
+        
         $videojuegos=[
             ["Super mario",5,16,"Juego Super mario"],
             ["God of War",25,18,"Juego God of War"],

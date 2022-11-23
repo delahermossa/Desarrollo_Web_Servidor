@@ -31,7 +31,7 @@
 
                     <div class="form-group mb-3">
                         <select class="form-select" name="pegi">Pegi
-                            <option selected>Selecciona una edad</option>
+                            <option selected disabled hidden>Selecciona una edad</option>
                             <option value="3">3</option>
                             <option value="7">7</option>
                             <option value="12">12</option>
@@ -47,8 +47,8 @@
                         <input class="form-control" type="text" name="descripcion">
                     </div>
 
-                    <button class="btn btn-primary mt-3" type="submit">Crear</button>
-                    <a class="btn btn-secondary mt-3" href="./create.php">Volver</a>
+                    <button class="btn btn-primary mt-3" type="submit" name="botonañadir">Crear</button>
+                    <!-- <a class="btn btn-secondary mt-3" href="./create.php">Volver</a> -->
 
                 </form>
             </div>
