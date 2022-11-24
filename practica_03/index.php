@@ -11,166 +11,164 @@
 </head>
 
 <body>
-    <h3>Practica 03 Arrays</h3>
 
-
-    <div class="row">
-        <div class="col-6">
-            <h4>Ejercicio 1--Tabla frutas</h4>
-            <table class="table table-primary">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Precio </th>
-
-                </tr>
-
-                <?php
-                $frutas = [
-                    ["Melon", 2],
-                    ["Sandía", 5],
-                    ["Melocotón", 4],
-                    ["Aguacate", 6],
-                    ["Mango", 8],
-                    ["Piña", 1],
-                ];
-
-                $nombre = array_column($frutas, 0); //con array_column extraigo la columna que quiero ordenar.
-                array_multisort($nombre, SORT_ASC, $frutas); //ordena por el título
-                $precio_suma = 0;
-
-                foreach ($frutas as $fruta) {
-                    list($nombre, $precio) = $fruta;
-                    $precio_suma = $precio_suma + $precio;
-
-                ?>
+    <div class="container">
+        <h3>Practica 03 Arrays</h3>
+        <div class="row">
+            <div class="col-6">
+                <h4>Ejercicio 1--Tabla frutas</h4>
+                <table class="table table-primary">
                     <tr>
-                        <td><?php echo $nombre ?></td>
-                        <td><?php echo $precio ?></td>
-
-                        </td>
+                        <th>Nombre</th>
+                        <th>Precio </th>
 
                     </tr>
 
-                <?php
+                    <?php
+                    $frutas = [
+                        ["Melon", 2],
+                        ["Sandía", 5],
+                        ["Melocotón", 4],
+                        ["Aguacate", 6],
+                        ["Mango", 8],
+                        ["Piña", 1],
+                    ];
 
-                }
+                    $nombre = array_column($frutas, 0); //con array_column extraigo la columna que quiero ordenar.
+                    array_multisort($nombre, SORT_ASC, $frutas); //ordena por el título
+                    $precio_suma = 0;
 
-                ?>
-                <tr>
-                    <th><?php echo "Total productos" ?></th>
-                    <th><?php echo count($frutas) ?></th>
+                    foreach ($frutas as $fruta) {
+                        list($nombre, $precio) = $fruta;
+                        $precio_suma = $precio_suma + $precio;
 
+                    ?>
+                        <tr>
+                            <td><?php echo $nombre ?></td>
+                            <td><?php echo $precio ?></td>
 
-                </tr>
-                <th><?php echo "Total " . $precio_suma . "€" ?></th>
+                        </tr>
 
-
-                <tr>
-
-                </tr>
-            </table>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-6">
-            <h4>Ejercicio 2--Tabla modificada</h4>
-            <table class="table table-secondary">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Precio </th>
-                    <th>Cantidad </th>
-                    <th>Precio * Cantidad </th>
-
-                </tr>
-
-                <?php
-                $frutas = [
-                    ["Melon", 2, 6],
-                    ["Sandía", 5, 8],
-                    ["Melocotón", 4, 9],
-                    ["Aguacate", 6, 5],
-                    ["Mango", 8, 8],
-                    ["Piña", 1, 2],
-                ];
-
-                $nombre = array_column($frutas, 0); //con array_column extraigo la columna que quiero ordenar.
-                array_multisort($nombre, SORT_ASC, $frutas); //ordena por el título
-                $precio_suma = 0;
-                $cantidad_total = 0;
-
-                foreach ($frutas as $fruta) {
-                    list($nombre, $precio, $cantidad) = $fruta;
-                    $precio_total = $cantidad * $precio;
-                    $precio_suma = $precio_suma + $precio_total;
-                    $cantidad_total = $cantidad_total + $cantidad;
-
-                ?>
-                    <tr>
-                        <td><?php echo $nombre ?></td>
-                        <td><?php echo $precio ?></td>
-                        <td><?php echo $cantidad ?></td>
-                        <td><?php echo $precio_total ?></td>
-
-                        </td>
-
-                    </tr>
-
-                <?php
-
-                }
-
-                ?>
-                <tr>
-                    <th><?php echo "Total productos adquiridos" . " " . $cantidad_total ?></th>
-
-                </tr>
-                <th><?php echo "Total " . $precio_suma . "€" ?></th>
-
-
-                <tr>
-
-                </tr>
-            </table>
-        </div>
-    </div>
-    <br>
-
-    <div class="row">
-        <div class="col-6">
-            <h4>Ejercicio 3--Array de números del 1 al 50</h4>
-            <table class="table table-success">
-                <tr>
-                    <th>Numeros</th>
-
-                </tr>
-
-                <?php
-                $numeros = [];
-
-                for ($i = 1; $i <= 50; $i++) {
-                    $numeros[] = $i;
-                    for ($i = 0; $i < count($numeros); $i++) {
-                ?>
-                        <li><?php echo $numeros[$i] ?></li>
-                        <?php
-
-
-                        ?>
-
-                <?php
+                    <?php
 
                     }
-                }
+
+                    ?>
+                    <tr>
+                        <th><?php echo "Total productos" ?></th>
+                        <th><?php echo count($frutas) ?></th>
 
 
 
+                    </tr>
+                    <th><?php echo "Total "  ?></th>
+                    <th><?php echo $precio_suma . "€" ?></th>
 
-                ?>
-                </tr>
 
-                </tr>
-            </table>
+
+                    <tr>
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-6">
+                <h4>Ejercicio 2--Tabla modificada</h4>
+                <table class="table table-secondary">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Precio </th>
+                        <th>Cantidad </th>
+                        <th>Producto * Cantidad </th>
+
+                    </tr>
+
+                    <?php
+                    $frutas = [
+                        ["Melon", 2, 6],
+                        ["Sandía", 5, 8],
+                        ["Melocotón", 4, 9],
+                        ["Aguacate", 6, 5],
+                        ["Mango", 8, 8],
+                        ["Piña", 1, 2],
+                    ];
+
+                    $nombre = array_column($frutas, 0); //con array_column extraigo la columna que quiero ordenar.
+                    array_multisort($nombre, SORT_ASC, $frutas); //ordena por el título
+                    $precio_suma = 0;
+                    $cantidad_total = 0;
+
+                    foreach ($frutas as $fruta) {
+                        list($nombre, $precio, $cantidad) = $fruta;
+                        $precio_total = $cantidad * $precio;
+                        $precio_suma = $precio_suma + $precio_total;
+                        $cantidad_total = $cantidad_total + $cantidad;
+
+                    ?>
+                        <tr>
+                            <td><?php echo $nombre ?></td>
+                            <td><?php echo $precio ?></td>
+                            <td><?php echo $cantidad ?></td>
+                            <td><?php echo $precio_total ?></td>
+
+                            </td>
+
+                        </tr>
+
+                    <?php
+
+                    }
+
+                    ?>
+                    <tr>
+                        <th><?php echo "Total productos adquiridos" . " " . $cantidad_total ?></th>
+
+                    </tr>
+                    <th><?php echo "Total " . $precio_suma . "€" ?></th>
+
+
+                    <tr>
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-6">
+                <h4>Ejercicio 3--Array de números del 1 al 50</h4>
+                <table class="table table-success">
+
+                    <?php
+                    $numeros = [];
+                    for ($i = 1; $i <= 50; $i++) {
+                        $numeros[$i] = $i;
+                    }
+
+                    foreach ($numeros as $i => $valor) {
+                        if ($valor % 3 == 0) {
+
+                            unset($numeros[$valor]);
+                        }
+                    }
+
+                    ?>
+
+                    <ul class="list-group">
+                        <?php
+                        foreach ($numeros as $valor) {
+                        ?><li class="list-group-item"><?php echo $valor ?></li>
+                        <?php
+                        }
+                        ?>
+                    </ul>
+                    </tr>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
