@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Videojuego;
 use Illuminate\Http\Request;
+use App\Models\Compania;
+use Illuminate\Support\ViewErrorBag;
 
-class VideojuegosController extends Controller
+class CompaniasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,23 +15,14 @@ class VideojuegosController extends Controller
      */
     public function index()
     {
-     $videojuegos=Videojuego::all(); //Esto hace un select de la tabla videojuegos
+        //
+        $companias=Compania::all();
 
+        $mensaje= "Aquí tenemos un listado de compañias";
 
-        //Crear un array bidimensional de videojuegos
-        //titulo, precio, pegi, descripcion
-        
-        /*$videojuegos=[
-            ["Super mario",5,16,"Juego Super mario"],
-            ["God of War",25,18,"Juego God of War"],
-            ["Okami",40,12,"Juego Okami"]
-
-        ];*/
-        $mensaje= "Aquí tenemos un listado de videojuegos";
-
-        return view('videojuegos/index',[
+        return View('companias/index',[
             'mensaje'=>$mensaje,
-            'videojuegos'=>$videojuegos
+            'companias'=>$companias
         ]);
     }
 
@@ -41,7 +33,8 @@ class VideojuegosController extends Controller
      */
     public function create()
     {
-        return view('videojuegos/create');
+        //
+        return view('companias/create');
     }
 
     /**
@@ -52,19 +45,16 @@ class VideojuegosController extends Controller
      */
     public function store(Request $request)
     {
-        //este método va a recibir la informacióny la va a insertar en la bd
+        //
 
-        $videojuego=new Videojuego;
-        $videojuego->titulo=$request->input('titulo');
-        $videojuego->precio=$request->input('precio');
-        $videojuego->pegi=$request->input('pegi');
-        $videojuego->descripcion=$request->input('descripcion');
-        $videojuego->save();
+        $compania=new Compania;
+        $compania->nombre=$request->input('nombre');
+        $compania->sede=$request->input('sede');
+        $compania->fecha_fundacion=$request->input('fecha_fundacion');
 
-        return redirect('videojuegos');
+        $compania->save();
 
-
-
+        return redirect('companias');
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompaniasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ConsolasController;
 use App\Http\Controllers\VideojuegosController;
@@ -25,7 +26,7 @@ Route::get('/consolas/info',function(){
 
 });
 
-Route::get('/consolas',[ConsolasController::class,'index']);
+/*Route::get('/consolas',[ConsolasController::class,'index']);
 Route::get ('/consolas/create',[ConsolasController::class,'create']);
 
 
@@ -33,7 +34,15 @@ Route::get ('/consolas/create',[ConsolasController::class,'create']);
     return view('videojuegos');
 });*/
 
-//Vista de videojuegos
-Route::get('/videojuegos',[VideojuegosController::class,'index']);
-Route::get('/videojuegos/create',[VideojuegosController::class,'create']);
+//Vista de videojuegos //Rutas creadas de manera estática
+
+
+/*Route::get('/videojuegos',[VideojuegosController::class,'index']);
+Route::get('/videojuegos/create',[VideojuegosController::class,'create']);*/
+
+//Ruta creada de manera dinámica
+
+Route::resource('/videojuegos',VideojuegosController::class);
+Route::resource('companias',CompaniasController::class);
+Route::resource('/consolas',ConsolasController::class);
 

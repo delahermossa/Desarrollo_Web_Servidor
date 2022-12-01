@@ -16,7 +16,7 @@
         <h3>Practica 03 Arrays</h3>
         <div class="row">
             <div class="col-6">
-                <h4>Ejercicio 1--Tabla frutas</h4>
+                <h4>Ejercicio 1</h4>
                 <table class="table table-primary">
                     <tr>
                         <th>Nombre</th>
@@ -75,7 +75,7 @@
         <br>
         <div class="row">
             <div class="col-6">
-                <h4>Ejercicio 2--Tabla modificada</h4>
+                <h4>Ejercicio 2</h4>
                 <table class="table table-secondary">
                     <tr>
                         <th>Nombre</th>
@@ -139,7 +139,7 @@
 
         <div class="row">
             <div class="col-6">
-                <h4>Ejercicio 3--Array de números del 1 al 50</h4>
+                <h4>Ejercicio 3</h4>
                 <table class="table table-success">
 
                     <?php
@@ -167,6 +167,110 @@
                     </ul>
                     </tr>
                     </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <h4>Ejercicio 4</h4>
+                <table class="table table-success">
+                    <?php
+                    $personas = [
+                        ["Berta", "Ruiz", rand(0, 100)],
+                        ["Alejandra", "Santiago", rand(0, 100)],
+                        ["Juan", "Castilla", rand(0, 100)],
+                    ];
+                    ?>
+                    <table class="table table-primary">
+                       
+                            <tr>
+                                <th>Nombre </th>
+                                <th>Apellido</th>
+                                <th>Edad</th>
+                                <th>Estado</th>
+                            </tr>
+                            <?php
+                            echo "<br><br>";
+                            foreach ($personas as $persona) {
+                                list($nombre, $apellido, $edad) = $persona;
+                                $estado = edad($edad);
+
+                            ?>
+                                <tr>
+                                    <td><?php echo $nombre ?></td>
+                                    <td><?php echo $apellido ?></td>
+                                    <td><?php echo $edad ?></td>
+                                    <td><?php echo $estado ?></td>
+                                </tr>
+
+                            <?php
+                            }
+                            function edad(int $est_edad)
+                            {
+                                $estado = match (true) {
+                                    $est_edad >= 18 and $est_edad < 65 => "Mayor de edad",
+                                    $est_edad >= 65 => "Jubilado",
+                                    default => "Menor de edad"
+                                };
+                                return $estado;
+                            }
+                            ?>
+                   
+                    </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <h4>Ejercicio 5</h4>
+                <table class="table table-primary">
+                <?php
+                $personas = [
+                    ['05709702k', 'Berta'],
+                    ['05648930s', 'Lola'],
+                    ['48695412p', 'Pablo'],
+                ];
+                ?>
+                <br><br>
+                <table class="table table-secondary">
+                   
+                        <tr>
+                            <th>Dni</th>
+                            <th>Nombre</th>
+                            <th>Validación dni</th>
+                            
+                        </tr>
+
+                        <?php
+                        foreach ($personas as $persona) {
+                            list($dni, $nombre) = $persona;
+                        ?>
+                            <tr>
+                                <td><?php echo $dni ?></td>
+                                <td><?php echo $nombre ?></td>
+                                <td><?php dni_valido($dni) ?></td>
+                            </tr>
+
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        function dni_valido(string $temp_dni)
+                        {
+                            $letras = strtoupper(substr($temp_dni, -1));
+                            $temp_dni = substr($temp_dni, 0, -1);
+                            if (substr("TRWAGMYFPDXBNJZSQVHLCKE", $temp_dni % 23, 1) == $letras && strlen($letras) == 1 &&  strlen($temp_dni) == 8) {
+                                echo "<p>DNI válido</p>";
+                            } else {
+                                echo "<p>DNI no válido</p>";
+                            }
+
+                            return $temp_dni ;
+                        }
+
+                        ?>
+             
                 </table>
             </div>
         </div>

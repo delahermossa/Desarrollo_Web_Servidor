@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Consola;
 
 class ConsolasController extends Controller
 {
@@ -13,13 +14,10 @@ class ConsolasController extends Controller
      */
     public function index()
     {
+        $consolas=Consola::all();
+
         $mensaje='Esto es la lista de consolas';
-        $consolas=[
-            "Play 4",
-            "Play 5",
-            "Nintendo",
-            "Xbox Series X"
-        ];
+      
         //Aquí iría la lógica del método
         return view('consolas/index',[
             'mensaje'=>$mensaje,
@@ -47,6 +45,15 @@ class ConsolasController extends Controller
     public function store(Request $request)
     {
         //
+        $consola=new Consola;
+        $consola->nombre=$request->input('nombre');
+        $consola->ano_salida=$request->input('ano_salida');
+        $consola->generacion=$request->input('generacion');
+        $consola->descripcion=$request->input('descripcion');
+
+        $consola->save();
+
+        return redirect('consolas');
     }
 
     /**
